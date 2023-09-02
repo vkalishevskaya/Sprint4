@@ -22,7 +22,8 @@ public class MainPage {
     public static final By orderButton = By.className("Button_Button__ra12g"); // кнопка Заказать вверху страницы
     public static final By orderButtonMiddlePage = By.cssSelector("[class*='Button_Middle']"); // кнопка Заказать посередине страницы
     public static final By dropQuestion3 = By.id("accordion__heading-42"); // 3-й вопрос
-    public static final By dropAnswer3 = By.id("accordion__panel-42"); // 3-й выпадающий ответ
+    public static final By dropAnswer3 = By.id("accordion__panel-42");// 3-й выпадающий ответ
+    public static final By acceptCookie = By.className("App_CookieButton__3cvqF"); // Кнопка Да все привыкли
 
     public MainPage(WebDriver driver) {
 
@@ -56,8 +57,13 @@ public class MainPage {
     }
 
 
+
     public MainPage clickOnGoButton() {
         driver.findElement(goButton).click();
+        return this;
+    }
+    public MainPage clickAcceptCookies() {
+        driver.findElement(acceptCookie).click();
         return this;
     }
 

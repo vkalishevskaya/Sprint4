@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.io.File;
 import java.time.Duration;
@@ -39,6 +40,10 @@ public class DriverRule extends ExternalResource {
 
         driver = new ChromeDriver(service);
     }
+
+    /* static void setupAll() {
+        WebDriverManager.chromedriver().setup();
+    } */
 
     public void SetUpFirefox(){
         System.setProperty("webdriver.http.factory", "jdk-http-client");

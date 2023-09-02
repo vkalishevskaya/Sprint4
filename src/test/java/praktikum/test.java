@@ -35,6 +35,7 @@ public class test {
         MainPage mainPage = new MainPage(driverRule.getDriver());
 
         mainPage.open()
+                .clickAcceptCookies()
                 .scrollToQuestion1()
                 .waitForQuestion1()
                 .clickOnQuestion1()
@@ -49,6 +50,7 @@ public class test {
         MainPage mainPage = new MainPage(driverRule.getDriver());
 
         mainPage.open()
+                .clickAcceptCookies()
                 .scrollToQuestion3()
                 .waitForQuestion3()
                 .clickOnQuestion3()
@@ -89,6 +91,7 @@ public class test {
             MainPage mainPage = new MainPage(driverRule.getDriver());
 
             mainPage.open()
+                    .clickAcceptCookies()
                     .scrollToButton()
                     .waitForButton();
             OrderPage orderPage = mainPage.clickOrderButtonMiddlePage()
