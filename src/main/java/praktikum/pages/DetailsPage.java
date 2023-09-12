@@ -14,7 +14,7 @@ public class DetailsPage {
     public static final By dateInput = By.cssSelector("[placeholder*='Когда']"); // плейсхолдер ввода даты
     public static final By rentalDuration = By.className("Dropdown-arrow");// кнопка открытия выпадающего меню
     public static final By blackColor = By.id("black"); // выбор черного самоката
-    public static final By orderButton = By.className("Button_Middle__1CSJM"); // кнопка Заказать
+    private final By orderButton = By.xpath(".//button[contains(@class,'Button_Middle') and text()='Заказать']"); // кнопка Заказать
     public DetailsPage(WebDriver driver) {
         this.driver = driver;
     }

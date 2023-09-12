@@ -17,12 +17,11 @@ public class MainPage {
     private static final By showStatusButton = By.cssSelector("[class*='Header_Button']"); // кнопка Статус заказа
     private static final By orderNumberInput = By.xpath(".//input[contains(@class, 'Input_Input_')]"); // поле ввода номера заказа
     private static final By goButton = By.className("Header_Link__1TAG7"); // кнопка Go
-    public static final By dropQuestion1 = By.id("accordion__heading-40"); // 1-й вопрос
-    public static final By dropAnswer1 = By.id("accordion__panel-40"); // 1-й выпадающий ответ
+    private final By sectionFAQ = By.className("Home_FourPart__1uthg"); //блок вопрос-ответ на главной странице
+    private final String questionPrefix = "accordion__heading-"; // n-ый вопрос
+    private final String answerPrefix = "accordion__panel-";  // n-ый ответ
     public static final By orderButton = By.className("Button_Button__ra12g"); // кнопка Заказать вверху страницы
-    public static final By orderButtonMiddlePage = By.cssSelector("[class*='Button_Middle']"); // кнопка Заказать посередине страницы
-    public static final By dropQuestion3 = By.id("accordion__heading-42"); // 3-й вопрос
-    public static final By dropAnswer3 = By.id("accordion__panel-42");// 3-й выпадающий ответ
+    public static final By orderButtonMiddlePage = By.cssSelector("[class*='Button_Button__ra12g']"); // кнопка Заказать посередине страницы
     public static final By acceptCookie = By.className("App_CookieButton__3cvqF"); // Кнопка Да все привыкли
 
     public MainPage(WebDriver driver) {
@@ -56,8 +55,6 @@ public class MainPage {
         return this;
     }
 
-
-
     public MainPage clickOnGoButton() {
         driver.findElement(goButton).click();
         return this;
@@ -68,24 +65,8 @@ public class MainPage {
     }
 
 
-    public MainPage clickOnQuestion1() {
-        driver.findElement(dropQuestion1).click();
-        return this;
-    }
-    public MainPage getAnswer1() {
-        driver.findElement(dropAnswer1);
-        return this;
-    }
-    public MainPage scrollToQuestion1() {
-        WebElement element = driver.findElement(By.id("accordion__heading-40"));
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        return this;
-    }
-
-    public MainPage scrollToButton() {
-        WebElement element = driver.findElement(By.className("Header_Button__28dPO"));
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        return this;
+    public void scrollToButton() {
+        ActionHelper.scrollTo(driver, orderButtonMiddlePage);
     }
 
     public MainPage waitForButton() {
@@ -94,34 +75,27 @@ public class MainPage {
         return this;
     }
 
-    public MainPage waitForQuestion1() {
-        new WebDriverWait(driver, Duration.ofSeconds(EnvConfigs.DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(dropQuestion1));
-        return this;
+    public void scrollToFAQ() {
+        ActionHelper.scrollTo(driver, sectionFAQ);
     }
-    public String answerText1(){
-        return driver.findElement(dropAnswer1).getText();
+    public WebElement getQuestion(int id) {
+        return driver.findElement(By.id(questionPrefix + id));
     }
-    public MainPage scrollToQuestion3() {
-        WebElement element = driver.findElement(By.id("accordion__heading-42"));
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        return this;
+
+    public WebElement getAnswer(int id) {
+        return driver.findElement(By.id(answerPrefix + id));
     }
-    public MainPage waitForQuestion3() {
-        new WebDriverWait(driver, Duration.ofSeconds(EnvConfigs.DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(dropQuestion3));
-        return this;
+
+    public void scrollToTabTitle(WebElement tabTitle) {
+        ActionHelper.doScrolling(driver, tabTitle);
     }
-    public MainPage clickOnQuestion3() {
-        driver.findElement(dropQuestion3).click();
-        return this;
+
+    public void waitThatTabTitleDisplayed(int id) {
+        ActionHelper.waitDisplayedElement(driver, By.id(questionPrefix + id));
     }
-    public MainPage getAnswer3() {
-        driver.findElement(dropAnswer3);
-        return this;
-    }
-    public String answerText3(){
-        return driver.findElement(dropAnswer3).getText();
+
+    public void waitThatTabTextDisplayed(int id) {
+        ActionHelper.waitDisplayedElement(driver, By.id(answerPrefix + id));
     }
 
 }

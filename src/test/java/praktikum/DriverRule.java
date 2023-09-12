@@ -4,58 +4,46 @@ import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.io.File;
 import java.time.Duration;
 
+import static praktikum.pages.EnvConfigs.WEB_DRIVER_CHROME;
+import static praktikum.pages.EnvConfigs.WEB_DRIVER_FIREFOX;
+
 public class DriverRule extends ExternalResource {
+
     WebDriver driver;
 
-
     @Override
-    protected void before() throws Throwable {
+    protected void before() {
         if ("firefox".equals(System.getProperty("browser")))
-            SetUpFirefox();
+            setUpFirefox();
         else
-            SetUpChrome();
+            setUpChrome();
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
-
-    public void SetUpChrome(){
+    private void setUpChrome() {
         System.setProperty("webdriver.http.factory", "jdk-http-client");
         ChromeDriverService service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(new File("/Users/v.kalishevskaya/Downloads/chromedriver-mac-x64/chromedriver"))
+                .usingDriverExecutable(new File(WEB_DRIVER_CHROME))
                 .build();
-
-        ChromeOptions options = new ChromeOptions()
-                .setBinary("/Users/v.kalishevskaya/Downloads/chrome-mac-x64 2/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing");
-
         driver = new ChromeDriver(service);
     }
 
-    /* static void setupAll() {
-        WebDriverManager.chromedriver().setup();
-    } */
-
-    public void SetUpFirefox(){
+    public void setUpFirefox() {
         System.setProperty("webdriver.http.factory", "jdk-http-client");
-        GeckoDriverService service = new GeckoDriverService.Builder()
-                .usingDriverExecutable(new File("/Users/v.kalishevskaya/Downloads/geckodriver"))
+        var service = new GeckoDriverService.Builder()
+                .usingDriverExecutable(new File(WEB_DRIVER_FIREFOX))
                 .build();
-
-        FirefoxOptions options = new FirefoxOptions()
-                .setBinary("/Users/v.kalishevskaya/Downloads/chromedriver-mac-x64/chromedriver/Applications/Firefox.app");
-
-        driver = new FirefoxDriver(service, options);
+        driver = new FirefoxDriver(service);
     }
+
+
 
     @Override
     protected void after() {
